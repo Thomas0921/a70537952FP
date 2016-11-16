@@ -252,7 +252,7 @@ if (!$conn) {
 die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT Target_EnterDate, Target_Days, Target_Name FROM target ORDER BY Target_AchieveDate LIMIT 5";
+$sql = "SELECT Target_EnterDate, Target_Days, Target_Name, Target_Amount FROM target ORDER BY Target_AchieveDate LIMIT 5";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -283,17 +283,25 @@ if (mysqli_num_rows($result) >= 5) {
     $answer = round(($datediff / (60 * 60 * 24)),0);
     $Target_Days = $row["Target_Days"];
     $percent = round(($answer/$Target_Days) * 100,1);
+    $TargetPerDay = $row["Target_Amount"]/$Target_Days;
+    $AmountLeft = $row["Target_Amount"] - ($answer * $TargetPerDay);
+    $AmountleftRounded = round($AmountLeft,1);
     if ($percent >= 100) {
       echo "<p style=\" display:inline;\">";
       echo "Congratulation! ";
       echo "<br>";
-      echo "Your ";
+      echo "You have save RM";
+      echo $row["Target_Amount"];
+      echo " in ";
       echo $Target_Days;
-      echo " Days Target has reached!";
+      echo " Days!";
       echo "</p>";
       echo "<div class=\"outter\">";
       echo "<div class=\"inner\"  style=\"width:100%; background-color: green;\"";
     } else {
+      echo "You have RM";
+      echo $AmountleftRounded;
+      echo " more in ";
       echo "$answer Days Left";
       echo "<br>";
       echo "Percentage: $percent%";
