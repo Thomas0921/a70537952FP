@@ -299,7 +299,7 @@ if (mysqli_num_rows($result) >= 5) {
       echo "<div class=\"outter\">";
       echo "<div class=\"inner\"  style=\"width:100%; background-color: green;\"";
     } else {
-      echo "You have RM";
+      echo "You have to save RM";
       echo $AmountleftRounded;
       echo " more in ";
       echo "$answer Days Left";
